@@ -4,6 +4,9 @@ public class calculateRequestModel {
     
     private String operation;
 
+    public calculateRequestModel() {
+    }
+
     public calculateRequestModel(String operation) {
         this.operation = operation;
     }

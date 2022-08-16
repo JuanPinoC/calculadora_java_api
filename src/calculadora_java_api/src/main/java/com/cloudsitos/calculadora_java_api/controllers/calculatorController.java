@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cloudsitos.calculadora_java_api.libraries.Math;
 import com.cloudsitos.calculadora_java_api.models.calculateRequestModel;
-import com.cloudsitos.calculadora_java_api.models.calculateResponseModelRest;
+import com.cloudsitos.calculadora_java_api.models.calculateResponseModel;
 
 @RestController
 @RequestMapping(value = "api/calculator")
@@ -20,15 +21,15 @@ public class calculatorController {
         return ResponseEntity.status(HttpStatus.OK).body("Successful connection");
     }
 
-    @PostMapping(value = "/calculate")
-    public ResponseEntity calculate(@RequestBody calculateRequestModel request){
-
-        String operation = request.getOperation();
-        
+    @PostMapping(value = "/calculate", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<calculateResponseModel> calculate(@RequestBody calculateRequestModel request){
+        String operation = request.getOperation().toString();
+        Integer response =  Math.calculate(operation);
         return new ResponseEntity<>(
-                    new calculateResponseModelRest("", "", ""),
+                    new calculateResponseModel(operation, response.toString(), "fdsf"),
                     HttpStatus.OK
                 );
+    
     }
 
 }
